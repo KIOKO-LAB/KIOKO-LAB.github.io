@@ -86,7 +86,7 @@
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
         }
 
         .badge {
@@ -119,7 +119,7 @@
             line-height: 2;
         }
 
-        /* Language display logic */
+        /* 초기 상태 설정: JS 실행 전까지 숨김 방지 */
         [lang="en"] { display: none; }
     </style>
 </head>
@@ -128,12 +128,12 @@
 <header>
     <div class="logo">KIOKO LAB</div>
     <div class="lang-tabs">
-        <button class="lang-tab active" onclick="setLang('ko')">KO</button>
-        <button class="lang-tab" onclick="setLang('en')">EN</button>
+        <button id="btn-ko" class="lang-tab active" onclick="setLang('ko')">KO</button>
+        <button id="btn-en" class="lang-tab" onclick="setLang('en')">EN</button>
     </div>
 </header>
 
-<section class="hero">
+<main class="hero">
     <div lang="ko">
         <h2>세상을 연결하는<br>퍼즐의 조각</h2>
         <p>키오코 랩은 창의적인 로직과 몰입감 넘치는 경험을 설계합니다.</p>
@@ -143,49 +143,57 @@
         <p>KIOKO LAB designs creative logic and immersive experiences.</p>
     </div>
 
-    <div class="project-card">
+    <article class="project-card">
         <span class="badge" lang="ko">출시 예정</span>
         <span class="badge" lang="en">Coming Soon</span>
         <h3 style="font-size: 1.8rem; margin: 10px 0;">Path Finder: Memory Puzzle</h3>
         <p lang="ko">당신의 기억력을 시험하고 길을 찾아가는 새로운 감각의 퍼즐 게임</p>
         <p lang="en">A new sense of puzzle game that tests your memory and finds the way.</p>
-    </div>
-</section>
+    </article>
+</main>
 
 <footer>
-    <div class="footer-links">
+    <nav class="footer-links">
         <a href="https://privacy.kiokolab.com" target="_blank">Privacy Policy</a>
         <a href="https://tos.kiokolab.com" target="_blank">Terms of Service</a>
-    </div>
-    <div class="company-info">
+    </nav>
+    <address class="company-info" style="font-style: normal;">
         <strong>KIOKO LAB (키오코 랩)</strong><br>
-        <span lang="ko">대표: 최세동 | 사업자등록번호: 586-29-01974</span>
-        <span lang="en">CEO: Se Dong Choi | Business License: (사업자번호 입력)</span><br>
-        <span lang="ko">주소: 서울특별시 마포구 와우산로 105, 5층 192A호</span>
-        <span lang="en">Address:5F 192A, 105, Wausan-ro, Mapo-gu, Seoul, South Korea</span><br>
+        <div lang="ko">대표: 최세동 | 사업자등록번호: 586-29-01974</div>
+        <div lang="en">CEO: Se Dong Choi | Business License: 586-29-01974</div>
+        <div lang="ko">주소: 서울특별시 마포구 와우산로 105, 5층 192A호</div>
+        <div lang="en">Address: 5F #192A, 105, Wausan-ro, Mapo-gu, Seoul, South Korea</div>
         Email: contact@kiokolab.com
-    </div>
+    </address>
     <p style="font-size: 0.8rem; margin-top: 20px;">&copy; 2026 KIOKO LAB. All rights reserved.</p>
 </footer>
 
 <script>
     function setLang(lang) {
-        // Toggle language elements
-        document.querySelectorAll('[lang="ko"]').forEach(el => el.style.display = lang === 'ko' ? 'block' : 'none');
-        document.querySelectorAll('[lang="en"]').forEach(el => el.style.display = lang === 'en' ? 'block' : 'none');
+        // 1. 모든 언어 요소 선택
+        const koElements = document.querySelectorAll('[lang="ko"]');
+        const enElements = document.querySelectorAll('[lang="en"]');
         
-        // Update tab buttons
-        document.querySelectorAll('.lang-tab').forEach(btn => {
-            btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
-        });
-
-        // Special handling for inline elements (spans)
-        document.querySelectorAll('span[lang]').forEach(el => {
-            if (el.style.display === 'block') el.style.display = 'inline-block';
-        });
+        // 2. 언어에 따라 표시/숨김 처리
+        if (lang === 'ko') {
+            koElements.forEach(el => {
+                el.style.display = el.tagName === 'SPAN' ? 'inline-block' : 'block';
+            });
+            enElements.forEach(el => el.style.display = 'none');
+            document.getElementById('btn-ko').classList.add('active');
+            document.getElementById('btn-en').classList.remove('active');
+        } else {
+            enElements.forEach(el => {
+                el.style.display = el.tagName === 'SPAN' ? 'inline-block' : 'block';
+            });
+            koElements.forEach(el => el.style.display = 'none');
+            document.getElementById('btn-en').classList.add('active');
+            document.getElementById('btn-ko').classList.remove('active');
+        }
     }
-    // Initialize
-    setLang('ko');
+
+    // 페이지 로드 시 초기 언어 설정
+    window.onload = () => setLang('ko');
 </script>
 
 </body>
