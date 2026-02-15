@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html id="html-root" lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,92 +35,43 @@
             z-index: 1000;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-        }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
 
-        .lang-tabs {
-            display: flex;
-            background: var(--light-gray);
-            border-radius: 20px;
-            padding: 4px;
-        }
+        .lang-tabs { display: flex; background: var(--light-gray); border-radius: 20px; padding: 4px; }
 
         .lang-tab {
-            padding: 6px 16px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            border-radius: 16px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: 0.3s;
+            padding: 6px 16px; border: none; background: none; cursor: pointer;
+            border-radius: 16px; font-size: 0.9rem; font-weight: 600; transition: 0.3s;
         }
 
-        .lang-tab.active {
-            background: var(--bg-color);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            color: var(--accent-color);
-        }
+        .lang-tab.active { background: var(--bg-color); box-shadow: 0 2px 5px rgba(0,0,0,0.1); color: var(--accent-color); }
 
-        .hero {
-            padding: 100px 10%;
-            text-align: center;
-        }
-
-        .hero h2 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            letter-spacing: -1.5px;
-        }
+        .hero { padding: 100px 10%; text-align: center; }
+        .hero h2 { font-size: 3rem; margin-bottom: 20px; letter-spacing: -1.5px; }
 
         .project-card {
-            background: var(--light-gray);
-            padding: 40px;
-            border-radius: 24px;
-            margin: 40px auto;
-            max-width: 600px;
-            transition: transform 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
+            background: var(--light-gray); padding: 40px; border-radius: 24px;
+            margin: 40px auto; max-width: 600px; transition: transform 0.3s ease;
         }
 
         .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: var(--accent-color);
-            color: white;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
+            display: inline-block; padding: 4px 12px; background: var(--accent-color);
+            color: white; border-radius: 50px; font-size: 0.8rem; margin-bottom: 10px;
         }
 
-        footer {
-            background: var(--light-gray);
-            padding: 60px 10%;
-            margin-top: 100px;
-        }
-
+        footer { background: var(--light-gray); padding: 60px 10%; margin-top: 100px; }
         .footer-links { margin-bottom: 30px; }
-        .footer-links a {
-            text-decoration: none;
-            color: var(--accent-color);
-            font-weight: 700;
-            margin-right: 25px;
-        }
+        .footer-links a { text-decoration: none; color: var(--accent-color); font-weight: 700; margin-right: 25px; }
+        .company-info { font-size: 0.9rem; color: #636e72; line-height: 2; }
 
-        .company-info {
-            font-size: 0.9rem;
-            color: #636e72;
-            line-height: 2;
-        }
-
-        /* 초기 상태 설정: JS 실행 전까지 숨김 방지 */
-        [lang="en"] { display: none; }
+        /* 언어 제어 CSS: 클래스 기반으로 변경하여 더 확실하게 제어 */
+        .lang-ko, .lang-en { display: none; }
+        
+        html[lang="ko"] .lang-ko { display: block; }
+        html[lang="ko"] span.lang-ko { display: inline-block; }
+        
+        html[lang="en"] .lang-en { display: block; }
+        html[lang="en"] span.lang-en { display: inline-block; }
     </style>
 </head>
 <body>
@@ -134,21 +85,21 @@
 </header>
 
 <main class="hero">
-    <div lang="ko">
+    <div class="lang-ko">
         <h2>세상을 연결하는<br>퍼즐의 조각</h2>
         <p>키오코 랩은 창의적인 로직과 몰입감 넘치는 경험을 설계합니다.</p>
     </div>
-    <div lang="en">
+    <div class="lang-en">
         <h2>Pieces of Puzzles<br>Connecting the World</h2>
         <p>KIOKO LAB designs creative logic and immersive experiences.</p>
     </div>
 
     <article class="project-card">
-        <span class="badge" lang="ko">출시 예정</span>
-        <span class="badge" lang="en">Coming Soon</span>
+        <span class="badge lang-ko">출시 예정</span>
+        <span class="badge lang-en">Coming Soon</span>
         <h3 style="font-size: 1.8rem; margin: 10px 0;">Path Finder: Memory Puzzle</h3>
-        <p lang="ko">당신의 기억력을 시험하고 길을 찾아가는 새로운 감각의 퍼즐 게임</p>
-        <p lang="en">A new sense of puzzle game that tests your memory and finds the way.</p>
+        <p class="lang-ko">당신의 기억력을 시험하고 길을 찾아가는 새로운 감각의 퍼즐 게임</p>
+        <p class="lang-en">A new sense of puzzle game that tests your memory and finds the way.</p>
     </article>
 </main>
 
@@ -159,40 +110,26 @@
     </nav>
     <address class="company-info" style="font-style: normal;">
         <strong>KIOKO LAB (키오코 랩)</strong><br>
-        <div lang="ko">대표: 최세동 | 사업자등록번호: 586-29-01974</div>
-        <div lang="en">CEO: Se Dong Choi | Business License: 586-29-01974</div>
-        <div lang="ko">주소: 서울특별시 마포구 와우산로 105, 5층 192A호</div>
-        <div lang="en">Address: 5F #192A, 105, Wausan-ro, Mapo-gu, Seoul, South Korea</div>
-        Email: contact@kiokolab.com
+        <div class="lang-ko">대표: 최세동 | 사업자등록번호: 586-29-01974</div>
+        <div class="lang-en">CEO: Se Dong Choi | Business License: 586-29-01974</div>
+        <div class="lang-ko">주소: 서울특별시 마포구 와우산로 105, 5층 192A호</div>
+        <div class="lang-en">Address: 5F #192A, 105, Wausan-ro, Mapo-gu, Seoul, South Korea</div>
+        Email: (이메일 주소 입력)
     </address>
     <p style="font-size: 0.8rem; margin-top: 20px;">&copy; 2026 KIOKO LAB. All rights reserved.</p>
 </footer>
 
 <script>
     function setLang(lang) {
-        // 1. 모든 언어 요소 선택
-        const koElements = document.querySelectorAll('[lang="ko"]');
-        const enElements = document.querySelectorAll('[lang="en"]');
+        // 1. HTML 태그의 lang 속성 변경 (CSS와 연동)
+        document.getElementById('html-root').setAttribute('lang', lang);
         
-        // 2. 언어에 따라 표시/숨김 처리
-        if (lang === 'ko') {
-            koElements.forEach(el => {
-                el.style.display = el.tagName === 'SPAN' ? 'inline-block' : 'block';
-            });
-            enElements.forEach(el => el.style.display = 'none');
-            document.getElementById('btn-ko').classList.add('active');
-            document.getElementById('btn-en').classList.remove('active');
-        } else {
-            enElements.forEach(el => {
-                el.style.display = el.tagName === 'SPAN' ? 'inline-block' : 'block';
-            });
-            koElements.forEach(el => el.style.display = 'none');
-            document.getElementById('btn-en').classList.add('active');
-            document.getElementById('btn-ko').classList.remove('active');
-        }
+        // 2. 버튼 활성화 상태 변경
+        document.getElementById('btn-ko').classList.toggle('active', lang === 'ko');
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
     }
 
-    // 페이지 로드 시 초기 언어 설정
+    // 초기 설정
     window.onload = () => setLang('ko');
 </script>
 
