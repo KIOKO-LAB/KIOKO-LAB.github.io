@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /app-ads.txt
+
+# 또는 더 확실하게
+User-agent: Google-adstxt
+Disallow:
