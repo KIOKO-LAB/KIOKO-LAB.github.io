@@ -59,6 +59,25 @@
             color: white; border-radius: 50px; font-size: 0.8rem; margin-bottom: 10px;
         }
 
+        .badge.live { background: #00b894; }
+
+        .store-buttons {
+            display: flex; justify-content: center; gap: 12px;
+            flex-wrap: wrap; margin-top: 24px;
+        }
+
+        .store-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 22px; border-radius: 12px;
+            background: #2d3436; color: white; text-decoration: none;
+            font-size: 0.95rem; font-weight: 600;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+        .store-btn:hover { transform: translateY(-2px); opacity: 0.92; }
+        .store-btn .store-emoji { font-size: 1.3rem; }
+        .store-btn .store-label { display: flex; flex-direction: column; line-height: 1.1; }
+        .store-btn .store-label small { font-size: 0.7rem; opacity: 0.8; font-weight: 400; }
+
         footer { background: var(--light-gray); padding: 60px 10%; margin-top: 100px; }
         .footer-links { margin-bottom: 30px; }
         .footer-links a { text-decoration: none; color: var(--accent-color); font-weight: 700; margin-right: 25px; }
@@ -95,11 +114,29 @@
     </div>
 
     <article class="project-card">
-        <span class="badge lang-ko">출시 예정</span>
-        <span class="badge lang-en">Coming Soon</span>
+        <span class="badge live lang-ko">출시 중</span>
+        <span class="badge live lang-en">Now Available</span>
         <h3 style="font-size: 1.8rem; margin: 10px 0;">Path Finder: Memory Puzzle</h3>
         <p class="lang-ko">당신의 기억력을 시험하고 길을 찾아가는 새로운 감각의 퍼즐 게임</p>
         <p class="lang-en">A new sense of puzzle game that tests your memory and finds the way.</p>
+        <div class="store-buttons">
+            <a class="store-btn" href="https://apps.apple.com/app/id6757067771" target="_blank" rel="noopener">
+                <span class="store-emoji">🍎</span>
+                <span class="store-label">
+                    <small class="lang-ko">App Store에서</small>
+                    <small class="lang-en">Download on the</small>
+                    <strong>App Store</strong>
+                </span>
+            </a>
+            <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.puzzle_game.path_finder" target="_blank" rel="noopener">
+                <span class="store-emoji">▶︎</span>
+                <span class="store-label">
+                    <small class="lang-ko">Google Play에서</small>
+                    <small class="lang-en">Get it on</small>
+                    <strong>Google Play</strong>
+                </span>
+            </a>
+        </div>
     </article>
 </main>
 
