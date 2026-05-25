@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KIOKO LAB</title>
+    <meta name="description" content="KIOKO LAB — independent game studio. Maker of Path Finder, a memory puzzle game on iOS and Android.">
+
+    <!-- Open Graph / Social cards -->
+    <meta property="og:title" content="KIOKO LAB — Path Finder">
+    <meta property="og:description" content="Memorize the path. Trace it from memory. A memory puzzle game by KIOKO LAB.">
+    <meta property="og:image" content="https://kiokolab.com/assets/og-image.png">
+    <meta property="og:url" content="https://kiokolab.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="ja_JP">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KIOKO LAB — Path Finder">
+    <meta name="twitter:description" content="Memorize the path. Trace it from memory.">
+    <meta name="twitter:image" content="https://kiokolab.com/assets/og-image.png">
+
     <style>
         :root {
             --primary-color: #2d3436;
@@ -50,8 +66,32 @@
         .hero h2 { font-size: 3rem; margin-bottom: 20px; letter-spacing: -1.5px; }
 
         .project-card {
-            background: var(--light-gray); padding: 40px; border-radius: 24px;
-            margin: 40px auto; max-width: 600px; transition: transform 0.3s ease;
+            background: var(--light-gray);
+            padding: 40px;
+            border-radius: 24px;
+            margin: 40px auto;
+            max-width: 720px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            text-align: center;
+        }
+
+        .project-hero-image {
+            width: 100%;
+            max-width: 220px;
+            border-radius: 24px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.14);
+            display: block;
+        }
+
+        .project-card-content { flex: 1; }
+
+        @media (min-width: 720px) {
+            .project-card { flex-direction: row; text-align: left; }
+            .project-card-content { text-align: left; }
+            .project-card-content .store-buttons { justify-content: flex-start; }
         }
 
         .badge {
@@ -83,14 +123,20 @@
         .footer-links a { text-decoration: none; color: var(--accent-color); font-weight: 700; margin-right: 25px; }
         .company-info { font-size: 0.9rem; color: #636e72; line-height: 2; }
 
-        /* 언어 제어 CSS: 클래스 기반으로 변경하여 더 확실하게 제어 */
-        .lang-ko, .lang-en { display: none; }
-        
+        /* Language switching: ko / en / ja */
+        .lang-ko, .lang-en, .lang-ja { display: none; }
+
         html[lang="ko"] .lang-ko { display: block; }
-        html[lang="ko"] span.lang-ko { display: inline-block; }
-        
+        html[lang="ko"] span.lang-ko,
+        html[lang="ko"] small.lang-ko { display: inline-block; }
+
         html[lang="en"] .lang-en { display: block; }
-        html[lang="en"] span.lang-en { display: inline-block; }
+        html[lang="en"] span.lang-en,
+        html[lang="en"] small.lang-en { display: inline-block; }
+
+        html[lang="ja"] .lang-ja { display: block; }
+        html[lang="ja"] span.lang-ja,
+        html[lang="ja"] small.lang-ja { display: inline-block; }
     </style>
 </head>
 <body>
@@ -100,6 +146,7 @@
     <div class="lang-tabs">
         <button id="btn-ko" class="lang-tab active" onclick="setLang('ko')">KO</button>
         <button id="btn-en" class="lang-tab" onclick="setLang('en')">EN</button>
+        <button id="btn-ja" class="lang-tab" onclick="setLang('ja')">JA</button>
     </div>
 </header>
 
@@ -112,30 +159,41 @@
         <h2>Pieces of Puzzles<br>Connecting the World</h2>
         <p>KIOKO LAB designs creative logic and immersive experiences.</p>
     </div>
+    <div class="lang-ja">
+        <h2>世界をつなぐ<br>パズルのピース</h2>
+        <p>KIOKO LABは創造的なロジックと没入感のある体験をデザインします。</p>
+    </div>
 
     <article class="project-card">
-        <span class="badge live lang-ko">출시 중</span>
-        <span class="badge live lang-en">Now Available</span>
-        <h3 style="font-size: 1.8rem; margin: 10px 0;">Path Finder: Memory Puzzle</h3>
-        <p class="lang-ko">당신의 기억력을 시험하고 길을 찾아가는 새로운 감각의 퍼즐 게임</p>
-        <p class="lang-en">A new sense of puzzle game that tests your memory and finds the way.</p>
-        <div class="store-buttons">
-            <a class="store-btn" href="https://apps.apple.com/app/id6757067771" target="_blank" rel="noopener">
-                <span class="store-emoji">🍎</span>
-                <span class="store-label">
-                    <small class="lang-ko">App Store에서</small>
-                    <small class="lang-en">Download on the</small>
-                    <strong>App Store</strong>
-                </span>
-            </a>
-            <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.puzzle_game.path_finder" target="_blank" rel="noopener">
-                <span class="store-emoji">▶︎</span>
-                <span class="store-label">
-                    <small class="lang-ko">Google Play에서</small>
-                    <small class="lang-en">Get it on</small>
-                    <strong>Google Play</strong>
-                </span>
-            </a>
+        <img class="project-hero-image" src="/assets/path-finder-hero.png" alt="Path Finder gameplay screenshot — full path preview on a 7x7 grid">
+        <div class="project-card-content">
+            <span class="badge live lang-ko">출시 중</span>
+            <span class="badge live lang-en">Now Available</span>
+            <span class="badge live lang-ja">配信中</span>
+            <h3 style="font-size: 1.8rem; margin: 10px 0;">Path Finder: Memory Puzzle</h3>
+            <p class="lang-ko">길이 잠깐 떠올랐다 사라집니다. 기억해서 그대로 따라가세요. iOS와 Android에서 만나는 새로운 감각의 메모리 퍼즐.</p>
+            <p class="lang-en">The path flashes for a moment, then disappears. Memorize it and trace it back. A memory puzzle on iOS and Android.</p>
+            <p class="lang-ja">道が一瞬光り、すぐに消えます。記憶を頼りに辿ってください。iOSとAndroidで遊べる新感覚のメモリーパズル。</p>
+            <div class="store-buttons">
+                <a class="store-btn" href="https://apps.apple.com/app/id6757067771" target="_blank" rel="noopener">
+                    <span class="store-emoji">🍎</span>
+                    <span class="store-label">
+                        <small class="lang-ko">App Store에서</small>
+                        <small class="lang-en">Download on the</small>
+                        <small class="lang-ja">App Storeから</small>
+                        <strong>App Store</strong>
+                    </span>
+                </a>
+                <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.puzzle_game.path_finder" target="_blank" rel="noopener">
+                    <span class="store-emoji">▶︎</span>
+                    <span class="store-label">
+                        <small class="lang-ko">Google Play에서</small>
+                        <small class="lang-en">Get it on</small>
+                        <small class="lang-ja">Google Playで</small>
+                        <strong>Google Play</strong>
+                    </span>
+                </a>
+            </div>
         </div>
     </article>
 </main>
@@ -149,8 +207,10 @@
         <strong>KIOKO LAB (키오코 랩)</strong><br>
         <div class="lang-ko">대표: 최세동 | 사업자등록번호: 586-29-01974</div>
         <div class="lang-en">CEO: Se Dong Choi | Business License: 586-29-01974</div>
+        <div class="lang-ja">代表: 崔世東 | 事業者登録番号: 586-29-01974</div>
         <div class="lang-ko">주소: 서울특별시 마포구 와우산로 105, 5층 192A호</div>
         <div class="lang-en">Address: 5F #192A, 105, Wausan-ro, Mapo-gu, Seoul, South Korea</div>
+        <div class="lang-ja">住所: ソウル特別市 麻浦区 臥牛山路 105、5階 192A号</div>
         Email: contact@kiokolab.com
     </address>
     <p style="font-size: 0.8rem; margin-top: 20px;">&copy; 2026 KIOKO LAB. All rights reserved.</p>
@@ -158,16 +218,18 @@
 
 <script>
     function setLang(lang) {
-        // 1. HTML 태그의 lang 속성 변경 (CSS와 연동)
         document.getElementById('html-root').setAttribute('lang', lang);
-        
-        // 2. 버튼 활성화 상태 변경
-        document.getElementById('btn-ko').classList.toggle('active', lang === 'ko');
-        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        ['ko', 'en', 'ja'].forEach(l => {
+            document.getElementById('btn-' + l).classList.toggle('active', lang === l);
+        });
     }
 
-    // 초기 설정
-    window.onload = () => setLang('ko');
+    // 초기 설정: 브라우저 언어로 자동 감지, 없으면 ko
+    window.onload = () => {
+        const browserLang = (navigator.language || 'ko').slice(0, 2);
+        const initial = ['ko', 'en', 'ja'].includes(browserLang) ? browserLang : 'ko';
+        setLang(initial);
+    };
 </script>
 
 </body>
