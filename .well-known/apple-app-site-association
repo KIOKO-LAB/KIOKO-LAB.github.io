@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "42H9M5J355.com.puzzle-game.path-finder",
+        "paths": ["/pf", "/pf/*"]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["42H9M5J355.com.puzzle-game.path-finder"]
+  }
+}

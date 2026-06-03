@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.puzzle_game.path_finder",
+      "sha256_cert_fingerprints": [
+        "56:98:41:B6:1A:08:C0:D1:B3:66:EC:6F:1D:3C:F6:A8:29:82:44:3F:B0:FC:83:10:20:25:62:3E:45:EA:28:C5"
+      ]
+    }
+  }
+]
