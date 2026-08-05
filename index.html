@@ -445,6 +445,41 @@
         const initial = ['ko', 'en', 'ja'].includes(browserLang) ? browserLang : 'ko';
         setLang(initial);
     };
+
+    // 이 페이지로 들어온 utm_* 를 스토어 링크까지 이어붙인다.
+    //
+    // /pf/ · /mt/ 랜딩은 원래 이걸 하고 있었지만 메인 홈은 스토어 링크가
+    // 하드코딩이라 캠페인 정보가 여기서 끊겼다. 인스타 프로필 링크처럼
+    // "두 앱을 다 보여줘야 하는" 자리는 메인 홈을 쓸 수밖에 없는데, 그러면
+    // 유입이 전부 'Other' 로 잡힌다.
+    //
+    // Play 는 utm 을 referrer 파라미터 안에 통째로 넣어야 읽고,
+    // Apple 은 utm_* 를 무시하고 ct 토큰만 본다 (marketing/scripts/utm.py 와
+    // 같은 규격 — Apple 의 ct 는 40자 제한).
+    (function tagStoreLinks() {
+        const q = new URLSearchParams(location.search);
+        const src = q.get('utm_source'), med = q.get('utm_medium'), camp = q.get('utm_campaign');
+        if (!src && !med && !camp) return;
+
+        const ref = new URLSearchParams();
+        if (src) ref.set('utm_source', src);
+        if (med) ref.set('utm_medium', med);
+        if (camp) ref.set('utm_campaign', camp);
+        const ct = (camp || src || '').slice(0, 40);
+
+        document.querySelectorAll('a.store-btn').forEach(a => {
+            const u = new URL(a.href);
+            if (u.hostname.endsWith('play.google.com')) {
+                u.searchParams.set('referrer', ref.toString());
+            } else if (u.hostname.endsWith('apps.apple.com')) {
+                if (ct) u.searchParams.set('ct', ct);
+                u.searchParams.set('mt', '8');
+            } else {
+                return;
+            }
+            a.href = u.toString();
+        });
+    })();
 </script>
 
 </body>
