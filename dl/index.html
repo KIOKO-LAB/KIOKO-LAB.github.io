@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dot Link</title>
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://kiokolab.com/">
+
+<meta property="og:title" content="Dot Link — Connect Puzzle">
+<meta property="og:description" content="Link two dots of the same color with blocks and they clear. One rule, five seconds to learn.">
+<meta property="og:image" content="https://kiokolab.com/assets/og-image.png">
+<meta property="og:url" content="https://kiokolab.com/mt">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dot Link — Connect Puzzle">
+<meta name="twitter:description" content="Link two dots of the same color with blocks and they clear. One rule, five seconds to learn.">
+<meta name="twitter:image" content="https://kiokolab.com/assets/og-image.png">
+
+<noscript><meta http-equiv="refresh" content="0; url=/"></noscript>
+
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #f8f9fa; color: #2d3436;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .wrap { min-height: 100%; display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 20px; padding: 24px; text-align: center; }
+  .msg { font-size: 1rem; opacity: 0.75; }
+  .fallback { display: none; flex-direction: column; gap: 12px; max-width: 320px; width: 100%; }
+  .fallback.show { display: flex; }
+  .btn { display: inline-block; padding: 14px 22px; border-radius: 12px;
+    background: #2d3436; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.95rem; }
+  .btn.alt { background: #00b894; }
+  h1 { margin: 0; font-size: 1.1rem; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Dot Link</h1>
+  <div class="msg" id="msg">잠시만요…</div>
+  <div class="fallback" id="fb">
+    <div class="msg">스토어가 안 열리면 직접 클릭하세요</div>
+    <a class="btn" id="ios-btn" href="https://apps.apple.com/app/id6799663655">App Store</a>
+    <a class="btn alt" id="and-btn" href="https://play.google.com/store/apps/details?id=com.kiokolab.dotlink">Google Play</a>
+  </div>
+</div>
+
+<script>
+(function () {
+  var IOS = "https://apps.apple.com/app/id6799663655";
+  var PLAY = "https://play.google.com/store/apps/details?id=com.kiokolab.dotlink";
+  var PKG = "com.kiokolab.dotlink";
+  var LANDING = "/";
+
+  function parseQuery() {
+    var q = {};
+    var s = window.location.search.replace(/^\?/, "");
+    if (!s) return q;
+    s.split("&").forEach(function (kv) {
+      if (!kv) return;
+      var i = kv.indexOf("=");
+      var k = i < 0 ? kv : kv.slice(0, i);
+      var v = i < 0 ? "" : kv.slice(i + 1);
+      if (k) q[decodeURIComponent(k)] = decodeURIComponent(v);
+    });
+    return q;
+  }
+
+  function buildQS(params) {
+    var parts = [];
+    Object.keys(params).forEach(function (k) {
+      parts.push(encodeURIComponent(k) + "=" + encodeURIComponent(params[k]));
+    });
+    return parts.join("&");
+  }
+
+  function appendQuery(url, qs) {
+    if (!qs) return url;
+    return url + (url.indexOf("?") >= 0 ? "&" : "?") + qs;
+  }
+
+  function detect(ua) {
+    if (/iPhone|iPad|iPod/i.test(ua)) return "ios";
+    if (/Android/i.test(ua)) return "android";
+    return "desktop";
+  }
+
+  function go(url) {
+    try { window.location.replace(url); }
+    catch (e) { window.location.href = url; }
+  }
+
+  var ua = navigator.userAgent || "";
+  var target = "desktop";
+  try { target = detect(ua); } catch (e) { target = "desktop"; }
+
+  var q = parseQuery();
+  var passthrough = buildQS(q);
+
+  var referrer = "";
+  if (q.utm_source || q.utm_medium || q.utm_campaign) {
+    var refParts = [];
+    if (q.utm_source) refParts.push("utm_source=" + encodeURIComponent(q.utm_source));
+    if (q.utm_medium) refParts.push("utm_medium=" + encodeURIComponent(q.utm_medium));
+    if (q.utm_campaign) refParts.push("utm_campaign=" + encodeURIComponent(q.utm_campaign));
+    referrer = refParts.join("&");
+  }
+
+  // Apple 은 utm_* 를 전부 무시하고 ct 토큰만 본다 (40자 제한).
+  // passthrough 만 붙이면 App Store Connect 에서 유입이 'Other' 로 뭉개진다.
+  var iosParams = Object.assign({}, q);
+  var ct = (q.utm_campaign || q.utm_source || "").slice(0, 40);
+  if (ct) iosParams.ct = ct;
+  iosParams.mt = "8";
+  var iosUrl = appendQuery(IOS, buildQS(iosParams));
+
+  var playParams = Object.assign({}, q);
+  if (referrer) playParams.referrer = referrer;
+  var playUrl = appendQuery(PLAY, buildQS(playParams));
+
+  document.getElementById("ios-btn").href = iosUrl;
+  document.getElementById("and-btn").href = playUrl;
+
+  setTimeout(function () {
+    var fb = document.getElementById("fb");
+    if (fb) fb.classList.add("show");
+  }, 1000);
+
+  if (target === "ios") {
+    go(iosUrl);
+  } else if (target === "android") {
+    var market = "market://details?id=" + PKG + (passthrough ? "&" + passthrough : "");
+    var fired = false;
+    try {
+      setTimeout(function () { if (!fired) { fired = true; go(playUrl); } }, 5);
+      window.location.href = market;
+    } catch (e) {
+      if (!fired) { fired = true; go(playUrl); }
+    }
+  } else {
+    var landing = appendQuery(LANDING, passthrough);
+    go(landing);
+  }
+})();
+</script>
+</body>
+</html>
