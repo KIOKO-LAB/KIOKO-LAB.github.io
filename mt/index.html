@@ -105,7 +105,14 @@
     referrer = refParts.join("&");
   }
 
-  var iosUrl = appendQuery(IOS, passthrough);
+  // Apple 은 utm_* 를 전부 무시하고 ct 토큰만 본다 (40자 제한).
+  // passthrough 만 붙이면 App Store Connect 에서 유입이 'Other' 로 뭉개진다.
+  var iosParams = Object.assign({}, q);
+  var ct = (q.utm_campaign || q.utm_source || "").slice(0, 40);
+  if (ct) iosParams.ct = ct;
+  iosParams.mt = "8";
+  var iosUrl = appendQuery(IOS, buildQS(iosParams));
+
   var playParams = Object.assign({}, q);
   if (referrer) playParams.referrer = referrer;
   var playUrl = appendQuery(PLAY, buildQS(playParams));
